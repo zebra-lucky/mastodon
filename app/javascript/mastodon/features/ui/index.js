@@ -202,9 +202,6 @@ class SwitchingColumnsArea extends React.PureComponent {
 
 }
 
-export default @connect(mapStateToProps)
-@injectIntl
-@withRouter
 class UI extends React.PureComponent {
 
   static contextTypes = {
@@ -554,3 +551,5 @@ class UI extends React.PureComponent {
   }
 
 }
+
+export default connect(mapStateToProps)(injectIntl(withRouter(UI)));
