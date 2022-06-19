@@ -7,6 +7,9 @@ module AccountAssociations
     # Local users
     has_one :user, inverse_of: :account, dependent: :destroy
 
+    # LNbits wallets
+    has_one :lnbits_wallet, inverse_of: :account, dependent: :destroy
+
     # E2EE
     has_many :devices, dependent: :destroy, inverse_of: :account
 

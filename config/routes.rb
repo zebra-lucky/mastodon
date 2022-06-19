@@ -180,6 +180,7 @@ Rails.application.routes.draw do
   resources :filters, except: [:show]
   resource :relationships, only: [:show, :update]
   resource :statuses_cleanup, controller: :statuses_cleanup, only: [:show, :update]
+  resource :lnbits_wallet, controller: :lnbits_wallet, only: [:show, :update]
 
   get '/public', to: 'public_timelines#show', as: :public_timeline
   get '/media_proxy/:id/(*any)', to: 'media_proxy#show', as: :media_proxy

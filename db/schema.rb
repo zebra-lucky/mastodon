@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_06_044941) do
+ActiveRecord::Schema.define(version: 2022_06_19_125522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -518,6 +518,15 @@ ActiveRecord::Schema.define(version: 2022_06_06_044941) do
     t.datetime "updated_at", null: false
     t.integer "replies_policy", default: 0, null: false
     t.index ["account_id"], name: "index_lists_on_account_id"
+  end
+
+  create_table "lnbits_wallets", force: :cascade do |t|
+    t.string "readkey"
+    t.string "tipjar"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_lnbits_wallets_on_account_id", unique: true
   end
 
   create_table "login_activities", force: :cascade do |t|
@@ -1104,6 +1113,7 @@ ActiveRecord::Schema.define(version: 2022_06_06_044941) do
   add_foreign_key "list_accounts", "follows", on_delete: :cascade
   add_foreign_key "list_accounts", "lists", on_delete: :cascade
   add_foreign_key "lists", "accounts", on_delete: :cascade
+  add_foreign_key "lnbits_wallets", "accounts"
   add_foreign_key "login_activities", "users", on_delete: :cascade
   add_foreign_key "markers", "users", on_delete: :cascade
   add_foreign_key "media_attachments", "accounts", name: "fk_96dd81e81b", on_delete: :nullify

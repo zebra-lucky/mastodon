@@ -21,6 +21,7 @@ const messages = defineMessages({
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
+  tips: { id: 'status.tips', defaultMessage: 'Tips for the post' },
   more: { id: 'status.more', defaultMessage: 'More' },
   mute: { id: 'status.mute', defaultMessage: 'Mute @{name}' },
   muteConversation: { id: 'status.mute_conversation', defaultMessage: 'Mute conversation' },
@@ -90,6 +91,10 @@ class ActionBar extends React.PureComponent {
 
   handleBookmarkClick = (e) => {
     this.props.onBookmark(this.props.status, e);
+  }
+
+  handleTipsClick = (tip_jar) => {
+    window.open(tip_jar, '_blank');
   }
 
   handleDeleteClick = () => {
@@ -286,6 +291,9 @@ class ActionBar extends React.PureComponent {
         <div className='detailed-status__button'><IconButton className='star-icon' animate active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} /></div>
         {shareButton}
         <div className='detailed-status__button'><IconButton className='bookmark-icon' active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='bookmark' onClick={this.handleBookmarkClick} /></div>
+        { status.getIn(['account', 'tip_jar']) &&
+          <div className='detailed-status__button'><IconButton title={intl.formatMessage(messages.tips)} icon='bolt' onClick={() => { this.handleTipsClick(status.getIn(['account', 'tip_jar'])) }}  /></div>
+        }
 
         <div className='detailed-status__action-bar-dropdown'>
           <DropdownMenuContainer size={18} icon='ellipsis-h' status={status} items={menu} direction='left' title={intl.formatMessage(messages.more)} />

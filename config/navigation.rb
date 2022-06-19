@@ -30,6 +30,8 @@ SimpleNavigation::Configuration.run do |navigation|
       s.item :export, safe_join([fa_icon('cloud-download fw'), t('settings.export')]), settings_export_url
     end
 
+    n.item :lnbits_wallet, safe_join([fa_icon('bolt fw'), t('settings.lnbits_wallet')]), lnbits_wallet_url, if: -> { current_user.functional? }
+
     n.item :invites, safe_join([fa_icon('user-plus fw'), t('invites.title')]), invites_path, if: proc { Setting.min_invite_role == 'user' && current_user.functional? }
     n.item :development, safe_join([fa_icon('code fw'), t('settings.development')]), settings_applications_url, if: -> { current_user.functional? }
 

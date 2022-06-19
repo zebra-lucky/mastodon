@@ -27,6 +27,7 @@ const messages = defineMessages({
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
+  tips: { id: 'status.tips', defaultMessage: 'Tips for the post' },
   removeBookmark: { id: 'status.remove_bookmark', defaultMessage: 'Remove bookmark' },
   open: { id: 'status.open', defaultMessage: 'Expand this status' },
   report: { id: 'status.report', defaultMessage: 'Report @{name}' },
@@ -113,6 +114,10 @@ class StatusActionBar extends ImmutablePureComponent {
     } else {
       this._openInteractionDialog('favourite');
     }
+  }
+
+  handleTipsClick = (tip_jar) => {
+    window.open(tip_jar, '_blank');
   }
 
   handleReblogClick = e => {
@@ -334,6 +339,9 @@ class StatusActionBar extends ImmutablePureComponent {
         <IconButton className='status__action-bar-button' title={replyTitle} icon={status.get('in_reply_to_account_id') === status.getIn(['account', 'id']) ? 'reply' : replyIcon} onClick={this.handleReplyClick} counter={status.get('replies_count')} obfuscateCount />
         <IconButton className={classNames('status__action-bar-button', { reblogPrivate })} disabled={!publicStatus && !reblogPrivate} active={status.get('reblogged')} pressed={status.get('reblogged')} title={reblogTitle} icon='retweet' onClick={this.handleReblogClick} counter={withCounters ? status.get('reblogs_count') : undefined} />
         <IconButton className='status__action-bar-button star-icon' animate active={status.get('favourited')} pressed={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} counter={withCounters ? status.get('favourites_count') : undefined} />
+        { status.getIn(['account', 'tip_jar']) &&
+          <IconButton className='status__action-bar-button' title={intl.formatMessage(messages.tips)} icon='bolt' onClick={() => { this.handleTipsClick(status.getIn(['account', 'tip_jar'])) }} />
+        }
 
         {shareButton}
 

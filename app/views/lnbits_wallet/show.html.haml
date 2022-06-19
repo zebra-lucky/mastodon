@@ -1,0 +1,32 @@
+- content_for :page_title do
+  = t('settings.lnbits_wallet')
+
+- content_for :heading_actions do
+  = button_tag t('generic.save_changes'), class: 'button', form: 'edit_readkey'
+
+
+= simple_form_for @lnbits_wallet, url: lnbits_wallet_path, method: :put, html: { id: 'edit_readkey', autocomplete: "off" } do |f|
+
+  = render 'shared/error_messages', object: @lnbits_wallet
+
+  %h4= t('Tips')
+
+  - if @lnbits_wallet&.tipjar&.start_with?('http')
+    .flash-message=link_to t('Verify Tip Jar link'), @lnbits_wallet.tipjar, target: '_blank'
+  - else
+    .flash-message=t('To receive tips for posts you can add Tip Jar link')
+
+  .fields-row
+    .fields-row__column.fields-row__column-12
+      = f.input :tipjar, wrapper: :with_label, label: t('Tip Jar link'), hint: false
+
+  %h4= t('Wallet')
+
+  - if @wallet_details
+    .flash-message=@wallet_details
+  - else
+    .flash-message=t('To view wallet balance you can add Invoice/read key')
+
+  .fields-row
+    .fields-row__column.fields-row__column-12
+      = f.input :readkey, wrapper: :with_label, label: t('Invoice/read key'), hint: false
